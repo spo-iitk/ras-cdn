@@ -7,7 +7,7 @@ services:
     ports:
       - "80"
     volumes:
-      - ./cdn:/app/cdn
-      - ./zip:/app/zip
-      - ./cdn.log:/app/cdn.log
-      - ./cdn.db:/app/cdn.db
+      - ${PWD}/cdn:/app/cdn
+      - ${PWD}/zip:/app/zip
+      - ${PWD}/cdn.log:/app/cdn.log
+      - ${PWD}/cdn.db:/app/cdn.db
