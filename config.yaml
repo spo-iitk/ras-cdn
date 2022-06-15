@@ -1,0 +1,12 @@
+DATABASE:
+  NAME: "cdn.db"
+
+SEP: "__"
+MAXSIZE: 5000000000
+ALLOWED_FILETYPE: "application/pdf"
+VIEW_URL: "http://localhost:8080/cdn/api/view/"
+
+FOLDERS:
+  CDN: "cdn"
+  ZIP: "zip"
+
