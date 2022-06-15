@@ -30,22 +30,15 @@ func appendFiles(filename string, zipw *zip.Writer) error {
 	return nil
 }
 
-func ZipFiles(files []string, outfile string) (string, error) {
-	sep := viper.GetString("SEP")
+func ZipFiles(files []string, outfile string) {
 	zipdir = viper.GetString("FOLDERS.ZIP")
 	cdndir = viper.GetString("FOLDERS.CDN")
 
-	uuid, err := GenerateUUID()
-	if err != nil {
-		return "", err
-	}
-	x := uuid + sep + outfile
-	x = zipdir + "/" + x
-
+	x := zipdir + "/" + outfile
 	out, err := os.Create(x)
 
 	if err != nil {
-		return "", err
+		log.Printf("failed to create zip file: %v", err)
 	}
 	defer out.Close()
 
@@ -55,13 +48,10 @@ func ZipFiles(files []string, outfile string) (string, error) {
 	for _, filename := range files {
 		if err := appendFiles(filename, zipw); err != nil {
 			os.Remove(x)
-			return "", err
 		}
 	}
 
-	db.CreateZip(files, uuid+sep+outfile)
-
-	return uuid + sep + outfile, nil
+	db.CreateZip(files, outfile)
 }
 
 func DeleteZips() {

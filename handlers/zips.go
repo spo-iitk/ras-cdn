@@ -26,14 +26,23 @@ func ZipFilesHandler(ctx *gin.Context) {
 		return
 	}
 
-	filename, err := utils.ZipFiles(req.Files, req.OutFile)
+	uuid, err := utils.GenerateUUID()
 	if err != nil {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	sep := viper.GetString("SEP")
+
+	x := uuid + sep + req.OutFile
+
+	go func() {
+		utils.ZipFiles(req.Files, x)
+	}()
+
 	ctx.JSON(200, gin.H{
 		"message":  "zipped",
-		"filename": filename,
+		"filename": uuid + sep + req.OutFile,
 	})
 }
 
