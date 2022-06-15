@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 git pull
 
 go mod download
