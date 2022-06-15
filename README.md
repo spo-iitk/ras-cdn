@@ -1,14 +1,14 @@
 # API Documentation
 
 ```sh
-    [POST]      /api/upload             - Uploads a file to the server
-    [DELETE]    /api/delete             - Deletes a file from the server
-    [GET]       /api/view/<filename>    - Views a file from the server
-    [GET]       /api/view/all           - List of all files on the server
-    [POST]      /api/zip                - Zips a list of files, returns the filename
-    [GET]       /api/zip/<filename>     - Zips a list of files and downloads it
-    [DELETE]    /api/zip                - Deletes a zip from the server
-    [DELETE]    /api/zip/all            - Deletes all zip files available on the server
+    [POST]      /cdn/upload             - Uploads a file to the server
+    [DELETE]    /cdn/delete             - Deletes a file from the server
+    [GET]       /cdn/view/<filename>    - Views a file from the server
+    [GET]       /cdn/view/all           - List of all files on the server
+    [POST]      /cdn/zip                - Zips a list of files, returns the filename
+    [GET]       /cdn/zip/<filename>     - Zips a list of files and downloads it
+    [DELETE]    /cdn/zip                - Deletes a zip from the server
+    [DELETE]    /cdn/zip/all            - Deletes all zip files available on the server
 ```
 
 ---

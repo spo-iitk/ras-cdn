@@ -12,7 +12,7 @@ func main() {
 	r := gin.Default()
 	r.Use(middleware.CORS())
 
-	fs := r.Group("/api/")
+	fs := r.Group("/cdn/")
 	{
 		fs.POST("/upload", handlers.UploadFileHandler)
 		fs.DELETE("/delete", handlers.DeleteFileHandler)
