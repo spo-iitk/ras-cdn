@@ -1,0 +1,13 @@
+version: "3.5"
+
+services:
+  server:
+    build: .
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./cdn:/app/cdn
+      - ./zip:/app/zip
+      - ./cdn.log:/app/cdn.log
+      - ./cdn.db:/app/cdn.db

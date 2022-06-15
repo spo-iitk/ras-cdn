@@ -5,6 +5,7 @@ import (
 	"github.com/abhishekshree/cdn/handlers"
 	"github.com/abhishekshree/cdn/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 func main() {
@@ -26,7 +27,9 @@ func main() {
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
-	if err := r.Run(":8080"); err != nil {
+	port := viper.GetString("PORT")
+
+	if err := r.Run(port); err != nil {
 		panic(err)
 	}
 }
