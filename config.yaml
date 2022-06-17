@@ -10,4 +10,4 @@ FOLDERS:
   CDN: "cdn"
   ZIP: "zip"
 
-PORT: ":8080"
+PORT: ":80"
