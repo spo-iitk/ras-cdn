@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/spf13/viper"
 	"github.com/spo-iitk/ras-cdn/db"
 	"github.com/spo-iitk/ras-cdn/utils"
 )
@@ -32,8 +31,6 @@ func ZipFilesHandler(ctx *gin.Context) {
 		return
 	}
 
-	sep := viper.GetString("SEP")
-
 	x := uuid + sep + req.OutFile
 
 	go func() {
@@ -47,8 +44,6 @@ func ZipFilesHandler(ctx *gin.Context) {
 }
 
 func DownloadZipHandler(ctx *gin.Context) {
-	upload_folder := viper.GetString("FOLDERS.ZIP")
-
 	filename := ctx.Param("filename")
 	db.UpdateAccessedAt(filename)
 
@@ -60,8 +55,6 @@ type DeleteZipRequest struct {
 }
 
 func DeleteOneZipHandler(ctx *gin.Context) {
-	upload_folder := viper.GetString("FOLDERS.ZIP")
-
 	var req DeleteZipRequest
 	if err := ctx.BindJSON(&req); err != nil {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})

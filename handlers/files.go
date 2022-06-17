@@ -10,14 +10,23 @@ import (
 	"github.com/spo-iitk/ras-cdn/utils"
 )
 
+var (
+	MAX_SIZE          int64
+	upload_folder     string
+	allowed_filetypes string
+	sep               string
+)
+
+func init() {
+	MAX_SIZE = viper.GetInt64("MAX_SIZE")
+	upload_folder = viper.GetString("FOLDERS.CDN")
+	allowed_filetypes = viper.GetString("ALLOWED_FILETYPE")
+	sep = viper.GetString("SEP")
+}
+
 func UploadFileHandler(ctx *gin.Context) {
-	MAX_SIZE := viper.GetInt64("MAX_SIZE")
-	upload_folder := viper.GetString("FOLDERS.CDN")
-	allowed_filetypes := viper.GetString("ALLOWED_FILETYPES")
-	sep := viper.GetString("SEP")
-
 	uid := ctx.GetHeader("token")
-
+	log.Println(MAX_SIZE)
 	file, err := ctx.FormFile("file")
 	if err != nil {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
@@ -55,8 +64,6 @@ func UploadFileHandler(ctx *gin.Context) {
 }
 
 func ViewAllHandler(ctx *gin.Context) {
-	upload_folder := viper.GetString("FOLDERS.CDN")
-
 	files, err := utils.ListFiles(upload_folder)
 	if err != nil {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
@@ -69,8 +76,6 @@ func ViewAllHandler(ctx *gin.Context) {
 }
 
 func ViewFileHandler(ctx *gin.Context) {
-	upload_folder := viper.GetString("FOLDERS.CDN")
-
 	filename := ctx.Param("filename")
 	ctx.File(upload_folder + "/" + filename)
 }
@@ -80,8 +85,6 @@ type DeleteRequest struct {
 }
 
 func DeleteFileHandler(ctx *gin.Context) {
-	upload_folder := viper.GetString("FOLDERS.CDN")
-
 	var req DeleteRequest
 	if err := ctx.BindJSON(&req); err != nil {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
