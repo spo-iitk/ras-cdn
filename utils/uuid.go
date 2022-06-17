@@ -12,5 +12,6 @@ func GenerateUUID() (string, error) {
 		return "", err
 	}
 	res := strings.Replace(id.String(), "-", "", -1)
+	res = "[SPO-IITK] " + res
 	return res, nil
 }
