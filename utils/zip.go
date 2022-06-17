@@ -6,8 +6,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/abhishekshree/cdn/db"
 	"github.com/spf13/viper"
+	"github.com/spo-iitk/ras-cdn/db"
 )
 
 var zipdir string

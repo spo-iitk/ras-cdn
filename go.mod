@@ -1,4 +1,4 @@
-module github.com/abhishekshree/cdn
+module github.com/spo-iitk/ras-cdn
 
 go 1.18
 

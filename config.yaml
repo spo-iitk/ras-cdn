@@ -2,12 +2,12 @@ DATABASE:
   NAME: "cdn.db"
 
 SEP: "__"
-MAXSIZE: 5000000000
+MAXSIZE: 250000
 ALLOWED_FILETYPE: "application/pdf"
-VIEW_URL: "http://localhost:8080/cdn/api/view/"
+VIEW_URL: "https://placement.iitk.ac.in/cdn/view/"
 
 FOLDERS:
   CDN: "cdn"
   ZIP: "zip"
 
-PORT: ":80"
+PORT: ":8080"

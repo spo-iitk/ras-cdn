@@ -3,10 +3,11 @@ package handlers
 import (
 	"log"
 
-	"github.com/abhishekshree/cdn/db"
-	"github.com/abhishekshree/cdn/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	_ "github.com/spo-iitk/ras-cdn/config"
+	"github.com/spo-iitk/ras-cdn/db"
+	"github.com/spo-iitk/ras-cdn/utils"
 )
 
 func UploadFileHandler(ctx *gin.Context) {

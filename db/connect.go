@@ -3,8 +3,8 @@ package db
 import (
 	"log"
 
-	"github.com/abhishekshree/cdn/models"
 	"github.com/spf13/viper"
+	"github.com/spo-iitk/ras-cdn/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )

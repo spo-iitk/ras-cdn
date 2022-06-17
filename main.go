@@ -1,11 +1,11 @@
 package main
 
 import (
-	_ "github.com/abhishekshree/cdn/config"
-	"github.com/abhishekshree/cdn/handlers"
-	"github.com/abhishekshree/cdn/middleware"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	_ "github.com/spo-iitk/ras-cdn/config"
+	"github.com/spo-iitk/ras-cdn/handlers"
+	"github.com/spo-iitk/ras-cdn/middleware"
 )
 
 func main() {

@@ -1,10 +1,10 @@
 package handlers
 
 import (
-	"github.com/abhishekshree/cdn/db"
-	"github.com/abhishekshree/cdn/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
+	"github.com/spo-iitk/ras-cdn/db"
+	"github.com/spo-iitk/ras-cdn/utils"
 )
 
 type ZipRequest struct {

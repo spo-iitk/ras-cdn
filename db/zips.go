@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/abhishekshree/cdn/models"
 	"github.com/spf13/viper"
+	"github.com/spo-iitk/ras-cdn/models"
 )
 
 func CreateZip(files []string, outfile string) {
