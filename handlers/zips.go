@@ -47,7 +47,7 @@ func DownloadZipHandler(ctx *gin.Context) {
 	filename := ctx.Param("filename")
 	db.UpdateAccessedAt(filename)
 
-	ctx.File(upload_folder + "/" + filename)
+	ctx.File(zip_folder + "/" + filename)
 }
 
 type DeleteZipRequest struct {
@@ -65,7 +65,7 @@ func DeleteOneZipHandler(ctx *gin.Context) {
 
 	db.DeleteZipRow(filename)
 
-	ok := utils.DeleteFile(upload_folder + "/" + filename)
+	ok := utils.DeleteFile(zip_folder + "/" + filename)
 	if !ok {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": "could not delete file"})
 		return

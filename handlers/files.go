@@ -13,6 +13,7 @@ import (
 var (
 	MAX_SIZE          int64
 	upload_folder     string
+	zip_folder        string
 	allowed_filetypes string
 	sep               string
 )
@@ -20,6 +21,7 @@ var (
 func init() {
 	MAX_SIZE = viper.GetInt64("MAX_SIZE")
 	upload_folder = viper.GetString("FOLDERS.CDN")
+	zip_folder = viper.GetString("FOLDERS.ZIP")
 	allowed_filetypes = viper.GetString("ALLOWED_FILETYPE")
 	sep = viper.GetString("SEP")
 }
