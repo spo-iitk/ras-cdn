@@ -96,6 +96,8 @@ func DeleteFileHandler(ctx *gin.Context) {
 	//TODO: can add some secret code before deletion later for security
 	filename := req.Filename
 
+	db.DeleteUpload(filename)
+
 	ok := utils.DeleteFile(upload_folder + "/" + filename)
 	if !ok {
 		ctx.AbortWithStatusJSON(400, gin.H{"error": "Could not delete file"})

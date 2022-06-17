@@ -20,3 +20,11 @@ func CreateUpload(uid string, name string) {
 		log.Println(tx.Error)
 	}
 }
+
+func DeleteUpload(filename string) {
+	tx := DB.Where("name = ?", filename).Delete(&models.Uploads{})
+
+	if tx.Error != nil {
+		log.Println(tx.Error)
+	}
+}
