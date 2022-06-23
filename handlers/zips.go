@@ -8,6 +8,7 @@ import (
 
 type ZipRequest struct {
 	Files   []string `json:"files"`
+	Rid     string   `json:"rid"`
 	OutFile string   `json:"outfile"`
 }
 
@@ -31,7 +32,7 @@ func ZipFilesHandler(ctx *gin.Context) {
 		return
 	}
 
-	x := uuid + sep + req.OutFile
+	x := utils.GenerateName(uuid, req.OutFile, req.Rid)
 
 	go func() {
 		utils.ZipFiles(req.Files, x)
@@ -39,7 +40,7 @@ func ZipFilesHandler(ctx *gin.Context) {
 
 	ctx.JSON(200, gin.H{
 		"message":  "zipped",
-		"filename": uuid + sep + req.OutFile,
+		"filename": x,
 	})
 }
 

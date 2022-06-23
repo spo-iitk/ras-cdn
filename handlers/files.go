@@ -28,6 +28,7 @@ func init() {
 
 func UploadFileHandler(ctx *gin.Context) {
 	uid := ctx.GetHeader("token")
+	rid := ctx.GetHeader("rid")
 	log.Println(MAX_SIZE)
 	file, err := ctx.FormFile("file")
 	if err != nil {
@@ -53,7 +54,7 @@ func UploadFileHandler(ctx *gin.Context) {
 		return
 	}
 
-	newname := uuid + sep + file.Filename
+	newname := utils.GenerateName(uuid, file.Filename, rid)
 	ctx.SaveUploadedFile(file, upload_folder+"/"+newname)
 	log.Println(file.Filename + " to " + newname)
 
