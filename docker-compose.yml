@@ -4,6 +4,8 @@ services:
   server:
     build: .
     restart: always
+    networks:
+      - bridge
     ports:
       - "80"
     volumes:
