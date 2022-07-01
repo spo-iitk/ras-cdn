@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -15,7 +16,7 @@ var (
 	upload_folder     string
 	zip_folder        string
 	allowed_filetypes string
-	sep               string
+	secret            string
 )
 
 func init() {
@@ -23,7 +24,7 @@ func init() {
 	upload_folder = viper.GetString("FOLDERS.CDN")
 	zip_folder = viper.GetString("FOLDERS.ZIP")
 	allowed_filetypes = viper.GetString("ALLOWED_FILETYPE")
-	sep = viper.GetString("SEP")
+	secret = viper.GetString("SECRET")
 }
 
 func UploadFileHandler(ctx *gin.Context) {
@@ -32,25 +33,25 @@ func UploadFileHandler(ctx *gin.Context) {
 	log.Println(MAX_SIZE)
 	file, err := ctx.FormFile("file")
 	if err != nil {
-		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
 	if file.Size > MAX_SIZE {
 		log.Printf("%v size is too large \n", file.Filename)
-		ctx.AbortWithStatusJSON(400, gin.H{"error": "File size is too large"})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "File size is too large"})
 		return
 	}
 
 	if file.Header.Get("Content-Type") != allowed_filetypes {
 		log.Printf("%v is not allowed \n", file.Header.Get("Content-Type"))
-		ctx.AbortWithStatusJSON(400, gin.H{"error": "File type is not allowed"})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "File type is not allowed"})
 		return
 	}
 
 	uuid, err := utils.GenerateUUID()
 	if err != nil {
-		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -60,7 +61,7 @@ func UploadFileHandler(ctx *gin.Context) {
 
 	db.CreateUpload(uid, newname)
 
-	ctx.JSON(200, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"message":  "uploaded",
 		"filename": newname,
 	})
@@ -69,11 +70,17 @@ func UploadFileHandler(ctx *gin.Context) {
 func ViewAllHandler(ctx *gin.Context) {
 	files, err := utils.ListFiles(upload_folder)
 	if err != nil {
-		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
-	ctx.JSON(200, gin.H{
+	viewAllSecret := ctx.GetHeader("secret")
+	if viewAllSecret != secret {
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
 		"files": files,
 	})
 }
@@ -85,26 +92,32 @@ func ViewFileHandler(ctx *gin.Context) {
 
 type DeleteRequest struct {
 	Filename string `json:"filename"`
+	Secret   string `json:"secret"`
 }
 
 func DeleteFileHandler(ctx *gin.Context) {
 	var req DeleteRequest
 	if err := ctx.BindJSON(&req); err != nil {
-		ctx.AbortWithStatusJSON(400, gin.H{"error": err.Error()})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
-	//TODO: can add some secret code before deletion later for security
+	// Works for now
+	if req.Secret != secret {
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Unauthorized"})
+		return
+	}
+
 	filename := req.Filename
 
 	db.DeleteUpload(filename)
 
 	ok := utils.DeleteFile(upload_folder + "/" + filename)
 	if !ok {
-		ctx.AbortWithStatusJSON(400, gin.H{"error": "Could not delete file"})
+		ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "Could not delete file"})
 		return
 	}
-	ctx.JSON(200, gin.H{
+	ctx.JSON(http.StatusOK, gin.H{
 		"message": "deleted",
 	})
 }

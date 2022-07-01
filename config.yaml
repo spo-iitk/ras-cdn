@@ -10,4 +10,6 @@ FOLDERS:
   CDN: "cdn"
   ZIP: "zip"
 
-PORT: ":80"
+SECRET: "secret"
+
+PORT: ":8080"
