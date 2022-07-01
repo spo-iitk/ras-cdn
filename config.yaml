@@ -12,4 +12,4 @@ FOLDERS:
 
 SECRET: "secret"
 
-PORT: ":8080"
+PORT: ":80"
