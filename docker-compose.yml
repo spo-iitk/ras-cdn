@@ -5,7 +5,7 @@ services:
     build: .
     restart: always
     networks:
-      - bridge
+      - default
     ports:
       - "80"
     volumes:
@@ -13,3 +13,7 @@ services:
       - ${PWD}/zip:/app/zip
       # - ${PWD}/cdn.log:/app/cdn.log
       # - ${PWD}/cdn.db:/app/cdn.db
+networks:
+  default:
+    name: bridge
+    external: true
