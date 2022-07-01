@@ -4,8 +4,9 @@ services:
   server:
     build: .
     restart: always
-    networks:
-      - bridge
+    network_mode: bridge
+    #networks:
+    #  - bridge
     ports:
       - "80"
     volumes:
@@ -13,7 +14,7 @@ services:
       - ${PWD}/zip:/app/zip
       # - ${PWD}/cdn.log:/app/cdn.log
       # - ${PWD}/cdn.db:/app/cdn.db
-networks:
-  bridge:
-    external:
-      name: bridge
+#networks:
+ # bridge:
+  #  external:
+   #   name: bridge
