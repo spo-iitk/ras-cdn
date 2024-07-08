@@ -2,7 +2,7 @@ DATABASE:
   NAME: "cdn.db"
 
 SEP: "__"
-MAX_SIZE: 250000
+MAX_SIZE: 2000000
 ALLOWED_FILETYPE: "application/pdf"
 VIEW_URL: "https://placement.iitk.ac.in/cdn/view/"
 
